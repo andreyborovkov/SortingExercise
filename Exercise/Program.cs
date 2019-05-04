@@ -48,33 +48,31 @@ namespace SortingExercise
         }
 
         private static int[] GetSortedArray(int[] array)
-        {
-            int temp;
+        {            
 
             for (int i = 0; i < array.Length - 1; i++)
             {
 
                 for (int j = i + 1; j < array.Length; j++)
                 {
-                    if (GetSmallestDigit(array[i]) > GetSmallestDigit(array[j]))
+                    int smallestDigitOfI = GetSmallestDigit(array[i]);
+                    int firstDigitOfI = GetFirstDigit(array[i]);
+                    int smallestDigitOfJ = GetSmallestDigit(array[j]);
+                    int firstDigitOfJ = GetFirstDigit(array[j]);
+
+                    if (smallestDigitOfI > smallestDigitOfJ)
                     {
-                        temp = array[j];
-                        array[j] = array[i];
-                        array[i] = temp;
-                    } else if (GetSmallestDigit(array[i]) == GetSmallestDigit(array[j]))
+                        Swap(array, i, j);
+                    } else if (smallestDigitOfI == smallestDigitOfJ)
                     {
-                        if (GetFirstDigit(array[i]) > GetFirstDigit(array[j]))
+                        if (firstDigitOfI > firstDigitOfJ)
                         {
-                            temp = array[j];
-                            array[j] = array[i];
-                            array[i] = temp;
-                        } else if (GetFirstDigit(array[i]) == GetFirstDigit(array[j]))
+                            Swap(array, i, j);
+                        } else if (firstDigitOfI == firstDigitOfJ)
                         {
                             if (array[i] > array[j])
                             {
-                                temp = array[j];
-                                array[j] = array[i];
-                                array[i] = temp;
+                                Swap(array, i, j);
                             }
                         }
                     }
@@ -86,6 +84,12 @@ namespace SortingExercise
     }
 
 
+        private static void Swap(int[] array, int i, int j)
+        {
+            int temp = array[j];
+            array[j] = array[i];
+            array[i] = temp;
+        }
 
 
         private static void DisplayResults(int[] array)
