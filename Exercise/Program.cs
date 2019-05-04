@@ -10,7 +10,7 @@ namespace SortingExercise
     {
         static void Main(string[] args)
         {
-            int[] array = { 58, 22, 18, 23, 13, 17, 30 };
+            int[] array = { 50, 15, 3, 1, 21 };
 
             DisplayResults(array);
             Console.ReadKey();
@@ -33,55 +33,64 @@ namespace SortingExercise
                 }
                 n = n / 10;
             }
-
-
             return sml;
         }
 
-        private static int[] GetSmallestDigitsArray(int[] array)
+        private static int GetFirstDigit(int number)
         {
-           var smallestDigitsArray = new int[array.Length];
+            int temp = number;
 
-           for (int i = 0; i < array.Length; i++)
+            while (temp >= 10)
             {
-                smallestDigitsArray[i] = GetSmallestDigit(array[i]);
+                temp /= 10;
             }
-
-            return smallestDigitsArray;
+            return temp; 
         }
 
-
-        private static int[] GetSortedArrayBySmallestDigits(int[] array)
+        private static int[] GetSortedArray(int[] array)
         {
-            var smallestDigitsArray = GetSmallestDigitsArray(array);
             int temp;
-            int temp2;
 
-            for (int j = 0; j <= smallestDigitsArray.Length - 2; j++)
+            for (int i = 0; i < array.Length - 1; i++)
             {
-                for (int i = 0; i <= smallestDigitsArray.Length - 2; i++)
+
+                for (int j = i + 1; j < array.Length; j++)
                 {
-                    if (smallestDigitsArray[i] > smallestDigitsArray[i + 1])
+                    if (GetSmallestDigit(array[i]) > GetSmallestDigit(array[j]))
                     {
-                        temp = smallestDigitsArray[i + 1];
-                        temp2 = array[i + 1];
-
-                        smallestDigitsArray[i + 1] = smallestDigitsArray[i];
-                        array[i + 1] = array[i];
-
-                        smallestDigitsArray[i] = temp;
-                        array[i] = temp2;
+                        temp = array[j];
+                        array[j] = array[i];
+                        array[i] = temp;
+                    } else if (GetSmallestDigit(array[i]) == GetSmallestDigit(array[j]))
+                    {
+                        if (GetFirstDigit(array[i]) > GetFirstDigit(array[j]))
+                        {
+                            temp = array[j];
+                            array[j] = array[i];
+                            array[i] = temp;
+                        } else if (GetFirstDigit(array[i]) == GetFirstDigit(array[j]))
+                        {
+                            if (array[i] > array[j])
+                            {
+                                temp = array[j];
+                                array[j] = array[i];
+                                array[i] = temp;
+                            }
+                        }
                     }
                 }
+
             }
 
-            return array;
-        }
+        return array;
+    }
+
+
 
 
         private static void DisplayResults(int[] array)
         {
-            var sortedArray = GetSortedArrayBySmallestDigits(array);
+            var sortedArray = GetSortedArray(array);
 
             for (int i = 0; i < sortedArray.Length; i++)
             {
@@ -89,7 +98,6 @@ namespace SortingExercise
             }
 
         } 
-
 
     }
 }
